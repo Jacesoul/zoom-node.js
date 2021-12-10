@@ -21,6 +21,16 @@ function handleConnection(socket) {
   console.log(socket);
 }
 
-wss.on("connection", handleConnection);
+const sockets = []; // 누군가 서버에 연결하면 그 connection을 여기에 넣는다.
+
+wss.on("connection", (socket) => {
+  sockets.push(socket);
+  console.log(sockets);
+  console.log("Conected to Browser ✅");
+  socket.on("close", () => console.log("Disconnected from Browser ❌"));
+  socket.on("message", (message) => {
+    sockets.forEach((aSocket) => aSocket.send(message.toString("utf-8")));
+  });
+});
 
 server.listen(PORT, handleListen); // localhost는 동일한 포트에서 http, ws 요청 두개를 다 처리할수 있다.
