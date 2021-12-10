@@ -12,4 +12,12 @@
 - babel.config.json =>  "presets" : ["@babel/preset-env"]
 - npm i @babel/preset-env -D
 - package.json 스크립트 추가 => "scripts": {"dev": "nodemon"},
-- npm i express pug
+- npm i express pug  
+
+### FRONT Setup
+- app.set("view engine", "pug");
+- app.set("views", __dirname + "/src/views");
+- app.get("/", (req, res) => res.render("home"));
+- app.use("/public", express.static(__dirname + "/public"));
+- MVP CSS import
+- <link rel="stylesheet" href="https://unpkg.com/mvp.css">
