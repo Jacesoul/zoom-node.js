@@ -21,3 +21,5 @@
 - app.use("/public", express.static(__dirname + "/public"));
 - MVP CSS import
 - <link rel="stylesheet" href="https://unpkg.com/mvp.css">
+- server.js는 Backend에서 구동될거고 app.js는 FrontEnd에서 구동된다. 
+- express.static은 유저에게 /public으로 가면 public폴더를 볼수 있도록 허용하는것이다. 
