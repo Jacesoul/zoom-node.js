@@ -52,3 +52,12 @@
 - app.js의 socket은 서버로의 연결을 뜻한다. 
 - socket.send()에서 JSON형태로 보내게 되면 서버에서는 stringify된 JSON을 JSON.parse로 받아야한다.
 - 백엔드로 javascript object를 보내면 좋지 않다. 연결하고 싶은 백엔드와 프런트가 javascript서버가 아닐수도 있기 때문이다. Java, Go서버일수도 있다. 
+
+### Socket.IO
+- socket.IO는 실시간, 양방향, event 기반의 통신을 가능하게한다.
+- Socket.IO는 framework인데 Websocket보다 탄력성이 뛰어나다.
+- Socket.IO는 webSocket의 부가기능이 아니다. 
+- 만약 webSocket 이용이 불가능하면, Socket.IO는 다른 방법을 이용해서 계속 작동한다.
+- 만약 webSocket 연결을 할수 없는 경우 HTTP long polling을 사용한다.
+- Socket.IO는 우리에게 신뢰성을 준다. 즉, 브라우저가 webSocket 지원을 안하거나 webSocket 연결에 문제가 있거나 회사에서 webSocket 사용이 안되는 경우나 Firewall 혹은 proxy가 있거나 등등 어떤 경우에든 Socket.IO는 실시간 기능을 제공해준다. 
+- Socket.IO는 프런트와 백엔드 간 실시간 통신을 가능하게 해주는 프레임워크 또는 라이브러리이다. 
