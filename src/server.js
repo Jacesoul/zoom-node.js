@@ -1,6 +1,7 @@
 import http from "http"; // http는 이미 node.js에 설치되어 있기 때문에 설치할 필요가 없다.
 import WebSocket from "ws";
 import express from "express";
+import { parse } from "path";
 
 const app = express();
 
@@ -25,14 +26,21 @@ const sockets = []; // 누군가 서버에 연결하면 그 connection을 여기
 
 wss.on("connection", (socket) => {
   sockets.push(socket);
+  socket["nickname"] = "Anonymous";
   console.log("Conected to Browser ✅");
   socket.on("close", () => console.log("Disconnected from Browser ❌"));
   socket.on("message", (message) => {
-    sockets.forEach((aSocket) => {
-      // const jsMsg = message.parse();
-      console.log(message.toString("utf-8").toUpperCase());
-      aSocket.send(message.toString("utf-8"));
-    });
+    const parsedMessage = JSON.parse(message);
+    switch (parsedMessage.type) {
+      case "new_message":
+        sockets.forEach((aSocket) =>
+          aSocket.send(`${socket.nickname}: ${parsedMessage.payload}`)
+        );
+        break;
+      case "nickname":
+        socket["nickname"] = parsedMessage.payload;
+        break;
+    }
   });
 });
 

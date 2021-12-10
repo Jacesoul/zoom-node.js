@@ -51,3 +51,4 @@
 - server.js의 socket은 연결된 브라우저를 뜻한다. 
 - app.js의 socket은 서버로의 연결을 뜻한다. 
 - socket.send()에서 JSON형태로 보내게 되면 서버에서는 stringify된 JSON을 JSON.parse로 받아야한다.
+- 백엔드로 javascript object를 보내면 좋지 않다. 연결하고 싶은 백엔드와 프런트가 javascript서버가 아닐수도 있기 때문이다. Java, Go서버일수도 있다. 
