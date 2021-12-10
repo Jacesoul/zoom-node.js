@@ -25,11 +25,14 @@ const sockets = []; // 누군가 서버에 연결하면 그 connection을 여기
 
 wss.on("connection", (socket) => {
   sockets.push(socket);
-  console.log(sockets);
   console.log("Conected to Browser ✅");
   socket.on("close", () => console.log("Disconnected from Browser ❌"));
   socket.on("message", (message) => {
-    sockets.forEach((aSocket) => aSocket.send(message.toString("utf-8")));
+    sockets.forEach((aSocket) => {
+      // const jsMsg = message.parse();
+      console.log(message.toString("utf-8").toUpperCase());
+      aSocket.send(message.toString("utf-8"));
+    });
   });
 });
 
