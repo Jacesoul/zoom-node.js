@@ -23,3 +23,15 @@
 - <link rel="stylesheet" href="https://unpkg.com/mvp.css">
 - server.js는 Backend에서 구동될거고 app.js는 FrontEnd에서 구동된다. 
 - express.static은 유저에게 /public으로 가면 public폴더를 볼수 있도록 허용하는것이다. 
+
+### Websocket
+- HTTP vs WebSocket 둘다 모두 프로토콜이다. 
+- 인터넷 전체가 http를 기반으로 만들어져있다.
+- http는 stateless이다. 유저와 서버사이에 아무런 연결이 없다. 서버는 유저가 누구인지 잊어버린다.
+- webSocket연결이 일어날땐 마치 악수처럼 작동한다. 
+- 브라우저가 서버로 webSocket request를 보내면, 서버가 받거나 거절한다. 
+- 브라우저와 서버가 서로 커뮤니케이션하는 터널이다. (bi-directional connection 양방향 연결)
+- 서버는 브라우저에게 어떤때나 메세지를 보낼수 있다.   
+- 브라우저에는 내장된 webSocket API가 있다. 
+- WebSocket은 어떤 프로그래밍 언어에 국한되어 있지않다. 그저 protocol일뿐 
+- real-time으로 소통하는 2개의 서버 사이에서도 작동한다. 
