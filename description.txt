@@ -61,3 +61,7 @@
 - 만약 webSocket 연결을 할수 없는 경우 HTTP long polling을 사용한다.
 - Socket.IO는 우리에게 신뢰성을 준다. 즉, 브라우저가 webSocket 지원을 안하거나 webSocket 연결에 문제가 있거나 회사에서 webSocket 사용이 안되는 경우나 Firewall 혹은 proxy가 있거나 등등 어떤 경우에든 Socket.IO는 실시간 기능을 제공해준다. 
 - Socket.IO는 프런트와 백엔드 간 실시간 통신을 가능하게 해주는 프레임워크 또는 라이브러리이다. 
+- npm i socket.io
+- 브라우저에도 Socket.IO설치를 해야한다. 브라우저가 주는 webSocket은 Socket.IO와 호환이 되지 않고 Socket.IO가 더 많은 기능을 주기 때문이다. 
+- script(src="/socket.io/socket.io.js") => HTML에 해당 script를 넣으면 Socket.IO설치가 된다. 
+- const socket = io();에서 io function은 알아서 socket.io를 실행하고 있는 서버를 찾는다. 

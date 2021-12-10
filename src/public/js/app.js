@@ -1,3 +1,6 @@
+const socket = io();
+
+/* WEBSOCKET CODE  
 const messageList = document.querySelector("ul");
 const messageForm = document.querySelector("#message");
 const nickForm = document.querySelector("#nick");
@@ -41,3 +44,4 @@ const handleNickSubmit = (event) => {
 
 messageForm.addEventListener("submit", handleSubmit);
 nickForm.addEventListener("submit", handleNickSubmit);
+*/
