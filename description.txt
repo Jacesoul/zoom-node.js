@@ -1,0 +1,15 @@
+### SERVER Setup
+- mkdir zoom && cd zoom 
+- npm init -y 
+- touch README.md
+- npm i nodemon -D
+- babel.config.json && nodemon.json 파일 생성 
+- src폴더 생성 및 server.js 파일 생성 
+- git init  
+- npm i @babel/core @babel/cli @babel/node -D
+- touch .gitignore (node_modules추가)
+- nodemon.json => "exec": "babel-node src/server.js"
+- babel.config.json =>  "presets" : ["@babel/preset-env"]
+- npm i @babel/preset-env -D
+- package.json 스크립트 추가 => "scripts": {"dev": "nodemon"},
+- npm i express pug
