@@ -17,4 +17,10 @@ const server = http.createServer(app); // webSocket을 사용하려면 express h
 
 const wss = new WebSocket.Server({ server }); // server를 굳이 넣지 않아도 되지만 이렇게 하면 http서버 위에 webSocket서버를 같은 PORT에서 만들수있다. http서버가 필요없을때는 webSocket서버만을 만들면된다.
 
+function handleConnection(socket) {
+  console.log(socket);
+}
+
+wss.on("connection", handleConnection);
+
 server.listen(PORT, handleListen); // localhost는 동일한 포트에서 http, ws 요청 두개를 다 처리할수 있다.
