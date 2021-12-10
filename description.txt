@@ -71,6 +71,8 @@
 - <webSocket보다 개선된점> 
 - 1. 어떤 event든지 전송할수있다. webSocket에서는 event이름이 message만 가능 (이벤트의 이름을 맘대로 정할수있다)
 - 2. javascript object를 전송할수있다. webSocket에서는 JSON.stringify해야함
-- 3. socket.emit의 3번째 argument로 callback function을 넣을수 있다.
-- socket.emit()의 첫번째 인자는 event이름, 두번째 인자는 보내고 싶은 payload, 세번째 인자는 서버에서 호출하는 function이 들어간다.
-- 
+- 3. socket.emit의 마지막 argument로 callback function을 넣을수 있다.
+- socket.emit()의 첫번째 인자는 event이름, 두번째 인자는 보내고 싶은 payload, 마지막 인자는 서버에서 호출하는 function을 넣을수있다. 
+- 마지막 인자에 들어가는 function은 서버에서 호출하고 프런트에서 실행한다. 
+- 4. webSocket에서는 text만 전송할수 있었지만 socket.IO에서는 어떤것이든 보낼수 있다.(무한정 argument로 보낼수있다)
+-

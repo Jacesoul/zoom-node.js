@@ -10,20 +10,19 @@ app.use("/public", express.static(__dirname + "/public"));
 app.get("/", (_, res) => res.render("home"));
 app.get("/*", (_, res) => res.redirect("/")); // 다른 URL을 사용하지 않고 오직 home URL만 사용
 
-const PORT = 3000;
+const PORT = 4000;
 const handleListen = () => console.log(`Listening on http://localhost:${PORT}`);
 
 const httpServer = http.createServer(app); // webSocket을 사용하려면 express http 서버에 직접 접근할수 있도록 만들어야한다.
 const io = SocketIO(httpServer);
 
 io.on("connection", (socket) => {
-  socket.on("room", (msg, done) => {
-    console.log(msg);
+  socket.on("room", (roomName, done) => {
+    console.log(roomName);
     setTimeout(() => {
-      done(); // 이 함수가 실행되면 front-end에서 3번째로 오는 콜백함수가 실행된다. 해당 콜백함수는 서버에서 호출하지만 프런트에서 실행된다.
-    }, 10000);
+      done("hello from the backend");
+    }, 5000);
   });
-  console.log(socket);
 });
 
 /* WEBSOCKET CODE

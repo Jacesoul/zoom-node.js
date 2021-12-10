@@ -3,12 +3,12 @@ const socket = io();
 const welcome = document.getElementById("welcome");
 const form = welcome.querySelector("form");
 
+const backendDone = (message) => console.log(`Backend says : `, message);
+
 const handleRoomSubmit = (event) => {
   event.preventDefault();
   const input = form.querySelector("input");
-  socket.emit("room", { payload: input.value }, () =>
-    console.log("server is done!")
-  );
+  socket.emit("room", input.value, backendDone);
   input.value = "";
 };
 
