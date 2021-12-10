@@ -17,6 +17,12 @@ const httpServer = http.createServer(app); // webSocket을 사용하려면 expre
 const io = SocketIO(httpServer);
 
 io.on("connection", (socket) => {
+  socket.on("room", (msg, done) => {
+    console.log(msg);
+    setTimeout(() => {
+      done(); // 이 함수가 실행되면 front-end에서 3번째로 오는 콜백함수가 실행된다. 해당 콜백함수는 서버에서 호출하지만 프런트에서 실행된다.
+    }, 10000);
+  });
   console.log(socket);
 });
 

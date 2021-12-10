@@ -65,3 +65,12 @@
 - 브라우저에도 Socket.IO설치를 해야한다. 브라우저가 주는 webSocket은 Socket.IO와 호환이 되지 않고 Socket.IO가 더 많은 기능을 주기 때문이다. 
 - script(src="/socket.io/socket.io.js") => HTML에 해당 script를 넣으면 Socket.IO설치가 된다. 
 - const socket = io();에서 io function은 알아서 socket.io를 실행하고 있는 서버를 찾는다. 
+- socket.IO에는 이미 room의 기능이 있다. 
+- socket.IO는 특정한 event를 emit할수 있다.(어떤 이름이든 상관없다)
+- 또한 object를 전송할수 있다.
+- <webSocket보다 개선된점> 
+- 1. 어떤 event든지 전송할수있다. webSocket에서는 event이름이 message만 가능 (이벤트의 이름을 맘대로 정할수있다)
+- 2. javascript object를 전송할수있다. webSocket에서는 JSON.stringify해야함
+- 3. socket.emit의 3번째 argument로 callback function을 넣을수 있다.
+- socket.emit()의 첫번째 인자는 event이름, 두번째 인자는 보내고 싶은 payload, 세번째 인자는 서버에서 호출하는 function이 들어간다.
+- 
