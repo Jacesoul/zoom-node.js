@@ -17,11 +17,13 @@ const httpServer = http.createServer(app); // webSocket을 사용하려면 expre
 const io = SocketIO(httpServer);
 
 io.on("connection", (socket) => {
-  socket.on("room", (roomName, done) => {
-    console.log(roomName);
-    setTimeout(() => {
-      done("hello from the backend");
-    }, 5000);
+  socket.onAny((event) => {
+    // onAny는 미들웨어인데 어느 event든지 console.log를 할수 있다.
+    console.log(`Socket Event : ${event}`);
+  });
+  socket.on("enter_room", (roomName, done) => {
+    socket.join(roomName);
+    done();
   });
 });
 

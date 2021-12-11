@@ -75,4 +75,6 @@
 - socket.emit()의 첫번째 인자는 event이름, 두번째 인자는 보내고 싶은 payload, 마지막 인자는 서버에서 호출하는 function을 넣을수있다. 
 - 마지막 인자에 들어가는 function은 서버에서 호출하고 프런트에서 실행한다. 
 - 4. webSocket에서는 text만 전송할수 있었지만 socket.IO에서는 어떤것이든 보낼수 있다.(무한정 argument로 보낼수있다)
--
+- chat Room을 만들기 위해서는 socket.join()에 room의 이름을 입력하면된다. 
+- user의 id는 user가 있는 방의 id와 같다.(socket.id)
+- socketIO에서 socket은 기본적으로 User와 서버사이에 private room이 있다.
