@@ -18,7 +18,7 @@ const addMessage = (message) => {
 
 const handleMessageSubmit = (event) => {
   event.preventDefault();
-  const input = messageForm.querySelector("input");
+  const input = room.querySelector("#message input");
   const value = input.value;
   socket.emit("new_message", value, roomName, () => {
     addMessage(`You : ${value}`);
@@ -26,13 +26,21 @@ const handleMessageSubmit = (event) => {
   input.value = "";
 };
 
+const handleNicknameSubmit = (event) => {
+  event.preventDefault();
+  const input = room.querySelector("#name input");
+  socket.emit("nickname", input.value);
+};
+
 const showRoom = () => {
   welcome.hidden = true;
   room.hidden = false;
   const h3 = room.querySelector("h3");
   h3.innerText = `Room ${roomName}`;
-  const form = room.querySelector("form");
-  form.addEventListener("submit", handleMessageSubmit);
+  const nameForm = room.querySelector("#name");
+  const messageForm = room.querySelector("#message");
+  messageForm.addEventListener("submit", handleMessageSubmit);
+  nameForm.addEventListener("submit", handleNicknameSubmit);
 };
 
 const handleRoomSubmit = (event) => {
@@ -45,12 +53,12 @@ const handleRoomSubmit = (event) => {
 
 form.addEventListener("submit", handleRoomSubmit);
 
-socket.on("welcome", () => {
-  addMessage("Someone joined!");
+socket.on("welcome", (name) => {
+  addMessage(`${name} joined!`);
 });
 
-socket.on("bye", () => {
-  addMessage("someone left :(");
+socket.on("bye", (name) => {
+  addMessage(`${name} left :(`);
 });
 
 /* 아래의 코드와 동일한 의미이다. 
@@ -59,6 +67,9 @@ socket.on("new_message", (message) => {
 });
 */
 socket.on("new_message", addMessage);
+socket.on("nickname", (message) => {
+  addMessage();
+});
 
 /* WEBSOCKET CODE  
 const messageList = document.querySelector("ul");

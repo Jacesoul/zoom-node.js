@@ -17,6 +17,7 @@ const httpServer = http.createServer(app); // webSocket을 사용하려면 expre
 const io = SocketIO(httpServer);
 
 io.on("connection", (socket) => {
+  socket["nickname"] = "Anonymous";
   socket.onAny((event) => {
     // onAny는 미들웨어인데 어느 event든지 console.log를 할수 있다.
     console.log(`Socket Event : ${event}`);
@@ -24,17 +25,22 @@ io.on("connection", (socket) => {
   socket.on("enter_room", (roomName, done) => {
     socket.join(roomName); // 같은 roomName이라면 같은 방에 있는 사람들에게 함께 socket.emit()을 보낸다.
     done();
-    socket.to(roomName).emit("welcome");
+    socket.to(roomName).emit("welcome", socket.nickname);
   });
   socket.on("disconnecting", () => {
     console.log(socket.rooms);
-    socket.rooms.forEach((room) => socket.to(room).emit("bye"));
+    socket.rooms.forEach((room) =>
+      socket.to(room).emit("bye", socket.nickname)
+    );
   });
   socket.on("new_message", (message, room, done) => {
-    socket.to(room).emit("new_message", message);
+    socket.to(room).emit("new_message", `${socket.nickname} : ${message}`);
     done();
   });
+  socket.on("nickname", (nickname) => (socket["nickname"] = nickname));
 });
+
+httpServer.listen(PORT, handleListen); // localhost는 동일한 포트에서 http, ws 요청 두개를 다 처리할수 있다.
 
 /* WEBSOCKET CODE
 const wss = new WebSocket.Server({ server }); // server를 굳이 넣지 않아도 되지만 이렇게 하면 http서버 위에 webSocket서버를 같은 PORT에서 만들수있다. http서버가 필요없을때는 webSocket서버만을 만들면된다.
@@ -60,5 +66,3 @@ wss.on("connection", (socket) => {
   });
 });
 */
-
-httpServer.listen(PORT, handleListen); // localhost는 동일한 포트에서 http, ws 요청 두개를 다 처리할수 있다.
