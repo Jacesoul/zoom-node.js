@@ -22,8 +22,9 @@ io.on("connection", (socket) => {
     // onAny는 미들웨어인데 어느 event든지 console.log를 할수 있다.
     console.log(`Socket Event : ${event}`);
   });
-  socket.on("enter_room", (roomName, done) => {
+  socket.on("enter_room", (roomName, nickname, done) => {
     socket.join(roomName); // 같은 roomName이라면 같은 방에 있는 사람들에게 함께 socket.emit()을 보낸다.
+    socket["nickname"] = nickname;
     done();
     socket.to(roomName).emit("welcome", socket.nickname);
   });

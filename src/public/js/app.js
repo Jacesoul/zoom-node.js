@@ -3,7 +3,6 @@ const socket = io();
 const welcome = document.getElementById("welcome");
 const form = welcome.querySelector("form");
 const room = document.getElementById("room");
-const messageForm = room.querySelector("form");
 
 room.hidden = true;
 
@@ -28,7 +27,7 @@ const handleMessageSubmit = (event) => {
 
 const handleNicknameSubmit = (event) => {
   event.preventDefault();
-  const input = room.querySelector("#name input");
+  const input = nicknameForm.querySelector("input");
   socket.emit("nickname", input.value);
 };
 
@@ -37,18 +36,16 @@ const showRoom = () => {
   room.hidden = false;
   const h3 = room.querySelector("h3");
   h3.innerText = `Room ${roomName}`;
-  const nameForm = room.querySelector("#name");
   const messageForm = room.querySelector("#message");
   messageForm.addEventListener("submit", handleMessageSubmit);
-  nameForm.addEventListener("submit", handleNicknameSubmit);
 };
 
 const handleRoomSubmit = (event) => {
   event.preventDefault();
-  const input = form.querySelector("input");
-  socket.emit("enter_room", input.value, showRoom);
-  roomName = input.value;
-  input.value = "";
+  const roomnameInput = form.querySelector("#roomname");
+  const nicknameInput = form.querySelector("#nickname");
+  socket.emit("enter_room", roomnameInput.value, nicknameInput.value, showRoom);
+  roomName = roomnameInput.value;
 };
 
 form.addEventListener("submit", handleRoomSubmit);
@@ -67,9 +64,6 @@ socket.on("new_message", (message) => {
 });
 */
 socket.on("new_message", addMessage);
-socket.on("nickname", (message) => {
-  addMessage();
-});
 
 /* WEBSOCKET CODE  
 const messageList = document.querySelector("ul");
