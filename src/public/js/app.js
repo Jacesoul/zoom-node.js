@@ -3,6 +3,7 @@ const socket = io();
 const welcome = document.getElementById("welcome");
 const form = welcome.querySelector("form");
 const room = document.getElementById("room");
+const messageForm = room.querySelector("form");
 
 room.hidden = true;
 
@@ -15,11 +16,23 @@ const addMessage = (message) => {
   ul.appendChild(li);
 };
 
+const handleMessageSubmit = (event) => {
+  event.preventDefault();
+  const input = messageForm.querySelector("input");
+  const value = input.value;
+  socket.emit("new_message", value, roomName, () => {
+    addMessage(`You : ${value}`);
+  });
+  input.value = "";
+};
+
 const showRoom = () => {
   welcome.hidden = true;
   room.hidden = false;
   const h3 = room.querySelector("h3");
   h3.innerText = `Room ${roomName}`;
+  const form = room.querySelector("form");
+  form.addEventListener("submit", handleMessageSubmit);
 };
 
 const handleRoomSubmit = (event) => {
@@ -35,6 +48,17 @@ form.addEventListener("submit", handleRoomSubmit);
 socket.on("welcome", () => {
   addMessage("Someone joined!");
 });
+
+socket.on("bye", () => {
+  addMessage("someone left :(");
+});
+
+/* 아래의 코드와 동일한 의미이다. 
+socket.on("new_message", (message) => {
+  addMessage(message);
+});
+*/
+socket.on("new_message", addMessage);
 
 /* WEBSOCKET CODE  
 const messageList = document.querySelector("ul");

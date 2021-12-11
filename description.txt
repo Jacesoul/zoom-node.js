@@ -78,3 +78,4 @@
 - chat Room을 만들기 위해서는 socket.join()에 room의 이름을 입력하면된다. 
 - user의 id는 user가 있는 방의 id와 같다.(socket.id)
 - socketIO에서 socket은 기본적으로 User와 서버사이에 private room이 있다.
+- socket.on("disconnecting")에서 disconnect는 연결이 완전히 끊어졌다는 의미이지만 disconnecting은 유저가 접속을 중단할 것이지만 아직 방을 완전히 나가지는 않은것이다.
