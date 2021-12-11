@@ -22,8 +22,9 @@ io.on("connection", (socket) => {
     console.log(`Socket Event : ${event}`);
   });
   socket.on("enter_room", (roomName, done) => {
-    socket.join(roomName);
+    socket.join(roomName); // 같은 roomName이라면 같은 방에 있는 사람들에게 함께 socket.emit()을 보낸다.
     done();
+    socket.to(roomName).emit("welcome");
   });
 });
 
