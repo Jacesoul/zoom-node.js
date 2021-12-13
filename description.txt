@@ -120,3 +120,12 @@ rooms.forEach((_,key) => {
 })
 >> room#1
 ```
+- set은 array 같은건데 item들이 unique하다. 
+```javascript
+const food = new Set(["pizza","love", "love"])
+undefined
+food
+Set(2){'pizza', 'love'}
+food.size
+2
+```
