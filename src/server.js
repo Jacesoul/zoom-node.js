@@ -16,7 +16,7 @@ const handleListen = () => console.log(`Listening on http://localhost:${PORT}`);
 const httpServer = http.createServer(app); // webSocket을 사용하려면 express http 서버에 직접 접근할수 있도록 만들어야한다.
 const io = SocketIO(httpServer);
 
-function publicRoom() {
+function publicRooms() {
   const {
     sockets: {
       adapter: { sids, rooms },
@@ -26,7 +26,7 @@ function publicRoom() {
   const sids = io.sockets.adapter.sids;
   const rooms = io.sockets.adapter.rooms;
   */
-  const publicRooms = [];
+  const publicRoom = [];
   rooms.forEach((_, key) => {
     if (sids.get(key) === undefined) {
       publicRoom.push(key);
@@ -42,22 +42,31 @@ io.on("connection", (socket) => {
     console.log(io.sockets.adapter);
     console.log(`Socket Event : ${event}`);
   });
+
   socket.on("enter_room", (roomName, nickname, done) => {
     socket.join(roomName); // 같은 roomName이라면 같은 방에 있는 사람들에게 함께 socket.emit()을 보낸다.
     socket["nickname"] = nickname;
     done();
     socket.to(roomName).emit("welcome", socket.nickname);
+    io.sockets.emit("room_change", publicRooms()); // 모든 방에 메세지 전달
   });
+
   socket.on("disconnecting", () => {
     console.log(socket.rooms);
     socket.rooms.forEach((room) =>
       socket.to(room).emit("bye", socket.nickname)
     );
   });
+
+  socket.on("disconnect", () => {
+    io.sockets.emit("room_change", publicRooms());
+  });
+
   socket.on("new_message", (message, room, done) => {
     socket.to(room).emit("new_message", `${socket.nickname} : ${message}`);
     done();
   });
+
   socket.on("nickname", (nickname) => (socket["nickname"] = nickname));
 });
 

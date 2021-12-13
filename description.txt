@@ -79,6 +79,7 @@
 - user의 id는 user가 있는 방의 id와 같다.(socket.id)
 - socketIO에서 socket은 기본적으로 User와 서버사이에 private room이 있다.
 - socket.on("disconnecting")에서 disconnect는 연결이 완전히 끊어졌다는 의미이지만 disconnecting은 유저가 접속을 중단할 것이지만 아직 방을 완전히 나가지는 않은것이다.
+- disconnecting event는 socket이 방을 떠나기 바로 직전에 발생한다. 
 - Adapter가 기본적으로 하는 일은 다른 서버들 사이에 실시간 어플리케이션을 동기화하는것이다. 
 - 지금은 서버의 메모리에서 Adapter를 사용하고 있다. (데이터베이스에는 아무것도 저장하고 있지 않다)
 - 앱안에 많은 클라이언트가 있을때, 모든 클라이언트에 대해서 connection을 열어놓아야한다. 
