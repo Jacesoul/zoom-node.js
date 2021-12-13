@@ -1,5 +1,6 @@
 import http from "http"; // http는 이미 node.js에 설치되어 있기 때문에 설치할 필요가 없다.
-import SocketIO from "socket.io";
+import { Server } from "socket.io";
+import { instrument } from "@socket.io/admin-ui";
 import express from "express";
 
 const app = express();
@@ -14,7 +15,17 @@ const PORT = 4000;
 const handleListen = () => console.log(`Listening on http://localhost:${PORT}`);
 
 const httpServer = http.createServer(app); // webSocket을 사용하려면 express http 서버에 직접 접근할수 있도록 만들어야한다.
-const io = SocketIO(httpServer);
+const io = new Server(httpServer, {
+  cors: {
+    // 기본적으로 이 URL에서 httpServer(localhost:4000)에 액세스 할것이기 때문이다.
+    origin: ["https://admin.socket.io"],
+    credentials: true,
+  },
+});
+
+instrument(io, {
+  auth: false, // 비밀번호 설정을 할수 있다.
+});
 
 function publicRooms() {
   const {
