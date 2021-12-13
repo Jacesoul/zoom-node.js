@@ -79,3 +79,43 @@
 - user의 id는 user가 있는 방의 id와 같다.(socket.id)
 - socketIO에서 socket은 기본적으로 User와 서버사이에 private room이 있다.
 - socket.on("disconnecting")에서 disconnect는 연결이 완전히 끊어졌다는 의미이지만 disconnecting은 유저가 접속을 중단할 것이지만 아직 방을 완전히 나가지는 않은것이다.
+- Adapter가 기본적으로 하는 일은 다른 서버들 사이에 실시간 어플리케이션을 동기화하는것이다. 
+- 지금은 서버의 메모리에서 Adapter를 사용하고 있다. (데이터베이스에는 아무것도 저장하고 있지 않다)
+- 앱안에 많은 클라이언트가 있을때, 모든 클라이언트에 대해서 connection을 열어놓아야한다. 
+- 즉 서버에는 많은 connection이 들어온다는 것이다. 이때쯤이면 서버를 2,3개 사용하게 될수있다.
+- 지금 서버 메모리에서 Adapter를 사용하고 있는데 그 말은 우리가 만든 3개의 서버같은 memory pool을 공유하지 않는다. 
+- 우리가 Adapter를 사용하지 않는다면 먄약 서버A에 있는 클라이언트가 서버B에 있는 클라이언트에 메세지를 보내고 싶다면 그건 불가능하다(두 서버는 분리되어 있기때문에)
+- Adapter는 에플리케이션으로 통하는 창문이다. 
+- Adapter는 누가 연결되었는지, 현재 어플리케이션에 room이 얼마나 있는지 알려준다. 
+- socket의 ID를 뜻하는 sids를 가져와서 room들을 보고 이 방들이 어떤 socket을 위해서 만들어졌는지 확인해야한다. (sids로 되어있는 private room과 public room이 나뉘어져 있다)
+- 만약 room ID를 socket ID에서 찾을 수 있다면 우리가 Private용 room을 찾은것이다. 
+- 이 부분을 하기 위해서는 Map 데이터 구조를 봐야한다. Map은 object 같은건데, unique keys가 있다. 
+- 우리가 하고 싶은건 모든 sids에 대한 map을 만드는 것이다. 
+
+```javascript
+const food = new Map()
+>> undefined
+food
+>> Map(0) {size: 0}
+food.set("pizza",12)
+>> Map(1) {'pizza' => 12}
+food.get("pizza")
+>> 12
+food.get('lalalal')
+>> undefined
+
+sids
+>> Map(2) {'wRdmDtBaP6dKU4xCAAAH' => true, '9y9z9aJGfNWtQQKBAAAJ' => true}
+rooms
+>> Map(3) {'wRdmDtBaP6dKU4xCAAAH' => true, '9y9z9aJGfNWtQQKBAAAJ' => true, 'room#1' => true}
+rooms.forEach((value, key) => console.log(value, key))
+>>> true 'wRdmDtBaP6dKU4xCAAAH'
+>>> true '9y9z9aJGfNWtQQKBAAAJ'
+>>> true 'room#1'
+rooms.forEach((_,key) => {
+    if(sids.get(key) === undefined){
+        console.log(key)
+    }
+})
+>> room#1
+```

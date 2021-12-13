@@ -16,10 +16,30 @@ const handleListen = () => console.log(`Listening on http://localhost:${PORT}`);
 const httpServer = http.createServer(app); // webSocket을 사용하려면 express http 서버에 직접 접근할수 있도록 만들어야한다.
 const io = SocketIO(httpServer);
 
+function publicRoom() {
+  const {
+    sockets: {
+      adapter: { sids, rooms },
+    },
+  } = io;
+  /* 위처럼 한번에 가져올수 있다.
+  const sids = io.sockets.adapter.sids;
+  const rooms = io.sockets.adapter.rooms;
+  */
+  const publicRooms = [];
+  rooms.forEach((_, key) => {
+    if (sids.get(key) === undefined) {
+      publicRoom.push(key);
+    }
+  });
+  return publicRoom;
+}
+
 io.on("connection", (socket) => {
   socket["nickname"] = "Anonymous";
   socket.onAny((event) => {
     // onAny는 미들웨어인데 어느 event든지 console.log를 할수 있다.
+    console.log(io.sockets.adapter);
     console.log(`Socket Event : ${event}`);
   });
   socket.on("enter_room", (roomName, nickname, done) => {
