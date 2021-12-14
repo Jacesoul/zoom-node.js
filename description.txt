@@ -140,4 +140,11 @@ food.size
 - stream은 비디오와 오디오가 결합된것이다. 
 - navigator.mediaDevices.getUserMedia(constraints)에서 constraints는 기본적으로 우리가 무엇을 얻고 싶은지에 대한것이다. 
 - stream의 멋진 점은 우리에게 track이라는 것을 제공해준다. 비디오, 오디오, 자막이 각각 하나의 track이 될수 있다. 
-- navigator.mediaDevices.enumerateDevices()는 컴퓨터나 모바일이 가지고 있는 모든 장치와 미디어 장치를 알려준다. 
+- navigator.mediaDevices.enumerateDevices()는 컴퓨터나 모바일이 가지고 있는 모든 장치와 미디어 장치를 알려준다.   
+- webRTC는 web Real-Time Communication을 뜻한다. (실시간 커뮤니케이션을 가능하게 해주는 기술)
+- SocketIO는 내가 메세지를 보낼때 바로 너에게 보내는것이 아니라 서버에게 메세지를 보내고 그 서버가 너에게 메세지를 보내는것이기 때문에 peer-to-peer가 아니다. 이건 그냥 서버에 연결되어 있을뿐이고 어떤 사람이 보낸 메세지를 우리에게 보내주는건 "서버"이다. 
+- webRTC가 있으면 peer-to-peer 커뮤니케이션이 가능하다. 
+- 즉, 내 영상과 오디오와 텍스트가 서버로 가지 않는다는 뜻이다. (서버가 필요없다) 이게 바로 실시간(real time)이 속도가 엄청 빠른 이유이다. 
+- 브라우저가 브라우저에 직접 연결이 되어 영상과 오디오, 텍스트가 전달이된다.
+- 나의 브라우저로 하여금 서버가 상대가 어디에 있는지 알게해야한다. 브라우저는 서버에게 configuration과 브라우저 위치만 전달한다.
+- 서버가 영상과 오디오를 처리하는게 아니라 다른 사람이 어디에 있는지 알려줄뿐이다.
