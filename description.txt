@@ -134,3 +134,8 @@ food.size
 - npm i @socket.io/admin-ui
 - https://admin.socket.io
 - Server URL: http://localhost:4000/admin
+
+### Video Chat 
+- video 태그의 playinline 속성은 모바일 브라우저가 필요로하는 속성이다. 가끔 모바일 기기로 비디오를 재생할때, 그 비디오는 전체화면이 되어버린다. playinline을 해주면 비디오는 전체화면이 되지 않는다. 대신에 오직 웹사이트에서만 실행이 된다. 
+- stream은 비디오와 오디오가 결합된것이다. 
+- navigator.mediaDevices.getUserMedia(constraints)에서 constraints는 기본적으로 우리가 무엇을 얻고 싶은지에 대한것이다. 
