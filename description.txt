@@ -148,3 +148,9 @@ food.size
 - 브라우저가 브라우저에 직접 연결이 되어 영상과 오디오, 텍스트가 전달이된다.
 - 나의 브라우저로 하여금 서버가 상대가 어디에 있는지 알게해야한다. 브라우저는 서버에게 configuration과 브라우저 위치만 전달한다.
 - 서버가 영상과 오디오를 처리하는게 아니라 다른 사람이 어디에 있는지 알려줄뿐이다.
+- 브라우저들이 따로 설정이 이루어지고 SocketIO를 통해서 이어준다. 
+- 영상과 오디오 데이터를 주고 받을때 그 영상의 오디오와 영상 데이터들을 peer connection에 넣어야한다. 
+- const offer = myPeerConnection.createOffer()의 offer는 다른 브라우저가 참가할수 있도록 초대장을 만드는 것이다. 
+- setLocalDescription은 브라우저가 offer를 가지면 그 offer로 연결을 구성해야한다.
+- Peer A는 offer를 생성하고 setLocalDescription을 하고 Peer B로 그 offer를 보낸다. 
+- 오디오와 영상을 주고 받을때 서버가 필요하지 않다. 그러나 offer를 주고 받기 위해서는 서버가 필요하다. offer가 주고 받아진 순간, 우리는 직접적으로 대화를 할수 있다.
