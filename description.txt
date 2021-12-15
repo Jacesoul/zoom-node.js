@@ -168,3 +168,9 @@ food.size
 - peer-to-peer 연결을 하고 있기 때문에 서로를 찾아야만 한다. 이제 바로 STUN 서버가 필요한 이유이다. 
 - webRTC를 사용한 실제 서비스나 전문적인 뭔가를 만들고 싶다면 직접 소유의 STUN 서버를 운영해야한다.
 - 장치가 공용주소를 알고있어야 다른 네트워크에 있는 장치들이 서로를 찾을수 있다.  
+- Data Channel은 peer-to-peer 유저가 언제든지 모든 종류의 데이터를 주고 받을 수 있는 채널이다. 
+- 너무 많은 peer를 가질때는 webRTC가 좋지 않다. peer가 많으면 많을수록 업로드와 다운로드가 넘쳐나게된다. wifi가 느려지게 되고 전체적으로 속도가 느려진다. 
+- 큰 Zoom 클론을 하고 싶다면 그물방 방식으로는 구현하기 어렵다. SFU(Selective Forwarding Unit) 서버 방식이 필요하다. 중간에 SFU 서버가 있고 그 서버가 상황에 따라 스트림을 압축해준다. 
+- DataChannel을 사용하면 그물방 방식으로 할건지 고민하지 않아도 된다. DataChannel들은 그저 텍스트이기때문이다. 업로드와 다운로드가 매우 빠르다. 모든 문제는 비디오와 오디오를 다룰때 생긴다. 그것들은 무겁고 까다로운 문제이기 때문이다. 
+- DataChannel을 생성하기 위해서는 먼저 offer를 하는 socket이 DataChannel을 생성하는 주체가 되어야한다. 또한 offer를 만들기전에 DataChannel을 만들어야한다.   
+- offer를 하는 socket이 createDataChannel을 했기 때문에 다른 peer들은 DataChannel을 생성할필요가 없다. Event Listener만 만들면된다.
